@@ -2,14 +2,23 @@ import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 
 export interface FundEstimate {
+  /** 基金代码 */
   fund_code: string;
+  /** 基金名称 */
   fund_name?: string;
+  /** 估算净值 */
   estimate_nav?: string;
+  /** 估算涨幅 */
   estimate_growth?: string;
+  /** 估算时间 */
   estimate_time?: string;
+  /** 最新净值 */
   latest_nav?: string;
+  /** 最新净值日期 */
   latest_nav_date?: string;
+  /** 是否来自缓存 */
   from_cache?: boolean;
+  /** 错误信息 */
   error?: string;
 }
 

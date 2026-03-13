@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { FundService } from './fund.service';
 
 @Controller('fund')
@@ -7,15 +7,16 @@ export class FundController {
 
   /**
    * 批量获取基金估值
-   * GET /fund/estimate?codes=000001,000002
+   * POST /fund/estimate
+   * @param body - { codes: '000001,000002' }
    */
-  @Get('estimate')
-  async getFundEstimates(@Query('codes') codes: string) {
-    if (!codes) {
+  @Post('estimate')
+  async getFundEstimates(@Body() body: { codes: string[] }) {
+    if (!body.codes) {
       return {};
     }
-    const codeList = codes.split(',').map((c) => c.trim()).filter((c) => c.length > 0);
-    return this.fundService.fetchFundEstimates(codeList);
+    const codes = body.codes.filter((c) => c.length > 0);
+    return this.fundService.fetchFundEstimates(codes);
   }
 
   @Post('get-market-index-list')
